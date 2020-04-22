@@ -158,11 +158,12 @@ func (ops *DeployOperations) createOrUpdateDeploy(a *app.App, confFiles *DeployC
 			return err
 		}
 	}
+	labelsBuild := map[string]string{"run": a.Name, "team": a.Team}
 	labels := map[string]string{"run": a.Name}
 	podBuilder := spec.NewRunnerPodBuilder(a.Name, ops.opts.SlugRunnerImage, ops.opts.SlugStoreImage).
 		ForApp(a).
 		WithSlug(slugURL).
-		WithLabels(labels).
+		WithLabels(labelsBuild).
 		WithStorage(ops.fileStorage).
 		WithArgs([]string{"start", a.ProcessType})
 
